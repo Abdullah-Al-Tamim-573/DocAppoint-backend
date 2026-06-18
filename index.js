@@ -64,6 +64,14 @@ async function run() {
             res.send(result)
         })
 
+        // single appointment doctor
+        app.get('/doctorAppointments/:id', async (req, res) => {
+            let {id} = req.params;
+            const query = { _id: new ObjectId(id) };
+            const result = await appointmentsCollection.findOne(query);
+            res.send(result)
+        })
+
         // appointment doctor delete (single doctor delete)
         app.delete('/doctorAppointments/:id', async (req, res) => {
              let {id} = req.params;
