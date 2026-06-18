@@ -79,6 +79,19 @@ async function run() {
              let result = await appointmentsCollection.deleteOne(query);
              res.send(result)
         })
+
+        app.patch('/doctorAppointments/:id', async (req, res) => {
+               let {id} = req.params;
+               let upgradedData = req.body;
+               let query = {_id: new ObjectId(id)};
+               let upgradeDoc = {
+                $set: {
+                   ...upgradedData
+                }
+               }
+              let result = await appointmentsCollection.updateOne(query, upgradeDoc);
+              res.send(result)
+        })
         
 
 
