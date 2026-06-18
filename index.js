@@ -34,7 +34,6 @@ async function run() {
         // doctors 
         app.get("/doctors", async (req, res) => {
             const cursor = await doctorsCollection.find();
-
             const result = await cursor.toArray();
             res.send(result)
         })
@@ -52,11 +51,31 @@ async function run() {
 
         app.post('/doctorAppointments', async (req, res) => {
             let formData = req.body;
-
             const result = await appointmentsCollection.insertOne(formData);
             res.send(result)
 
         })
+
+        // appointment doctors list
+
+        app.get('/doctorAppointments', async (req, res) => {
+            const cursor = await appointmentsCollection.find();
+            const result = await cursor.toArray();
+            res.send(result)
+        })
+
+        // appointment doctor delete (single doctor delete)
+        app.delete('/doctorAppointments/:id', async (req, res) => {
+             let {id} = req.params;
+             let query = {_id : new ObjectId(id)};
+             let result = await appointmentsCollection.deleteOne(query);
+             res.send(result)
+        })
+        
+
+
+
+
 
 
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
